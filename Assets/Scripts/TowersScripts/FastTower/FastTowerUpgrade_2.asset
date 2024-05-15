@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550768fc463d67346a4676ff317e22b2, type: 3}
+  m_Name: FastTowerUpgrade_2
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 4205181066085892131, guid: a0d60acd85247bb45bc4cbe126f5dc79,
+    type: 3}
+  attackDamage: 6
+  attackSpeed: 1.7
+  towerAmmo: 40
+  towerRange: 8
+  towerPrice: 100
+  damageType: 0
+  towerType: 1
+  GetTowerType: 0
+  cannonSmokeVFX: {fileID: 0}
+  projectilePrefab: {fileID: 6908403426258122529, guid: 98bf69080e064984ca31aa0866d6e2d7,
+    type: 3}

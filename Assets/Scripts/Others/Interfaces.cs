@@ -1,0 +1,12 @@
+public interface IDamageable
+{
+    public void TakeDamage(float damageAmount, TowerSO.DamageType damageType);
+}
+
+public interface IInteractable
+{
+    public TowerSO GetTowerInfo();
+    public TowerSO GetUpgradeInfo();
+    public float GetCurrentAmmo();
+    public Tower GetCurrentTower();
+}
