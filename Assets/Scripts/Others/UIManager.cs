@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -32,7 +33,6 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject towerUtilityPanel;
     [SerializeField] private GameObject currentTowerUtilityInfo;
-    [SerializeField] private TextMeshProUGUI upgradeCost;
 
     [Header("UtilityPanel - Building")]
     [SerializeField] private GameObject buildingButtonsPanel;
@@ -46,11 +46,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI equationText;
     [SerializeField] private RectTransform mathEQPanelRectT;
 
+    [SerializeField] private GameObject deadScreen;
+
     private MathEquation currentEquation;
     private Tower currentTower;
 
-    private bool utilityPanelIsTransitioning = false;
-    private bool infoPanelIsTransitioning = false;
+    private bool isUtilityPanelTransitioning = false;
+    private bool isInfoPanelTransitioning = false;
+    private bool isTowerInfoPanelTransitioning = false;
+    private bool isMathPanelTransitioning = false;
     private bool isEnemyInfoOpen = false;
     private bool isTowerInfoOpen = false;
 
@@ -87,11 +91,16 @@ public class UIManager : MonoBehaviour
     #region ---- Building ---- 
     public void OpenUtilityPanel(GameObject olderLocation, Transform towerPlace, Tower.TowerLocation towerLocation)
     {
+        if (isUtilityPanelTransitioning) return;
+
+        isUtilityPanelTransitioning = true;
+
         utilityPanel.SetActive(true);
         leftArrow.SetActive(false);
-        utilityPanel.transform.DOScaleX(1f, 2f).OnComplete(() =>
+        utilityPanel.transform.DOScaleX(1f, 1f).OnComplete(() =>
         {
             buildingButtonsPanel.SetActive(true);
+            isUtilityPanelTransitioning = false;
         });
 
         foreach(BuyBuildingButton buildingButton in buyBuildingButtons)
@@ -105,11 +114,16 @@ public class UIManager : MonoBehaviour
 
     public void CloseUtilityPanel()
     {
+        if (isUtilityPanelTransitioning) return;
+
+        isUtilityPanelTransitioning = true;
+
         buildingButtonsPanel.SetActive(false);
 
-        utilityPanel.transform.DOScaleX(0f, 2f).OnComplete(() => {
+        utilityPanel.transform.DOScaleX(0f, 1f).OnComplete(() => {
             utilityPanel.SetActive(false);
             leftArrow.SetActive(true);
+            isUtilityPanelTransitioning = false;
         });
     }
     
@@ -128,16 +142,18 @@ public class UIManager : MonoBehaviour
     #region ---- ReloadUI ----
     public void OpenMathEquationPanel(MathEquation equation, Tower tower)
     {
+        HideTowerUtilityInfo();
+
         currentEquation = equation;
         currentTower = tower;
         equationText.text = "";
         mathUtilityPanel.SetActive(true);
 
-        mathUtilityPanel.transform.DOScaleX(1f, 2f).OnComplete(() =>
-        {
+        mathUtilityPanel.transform.DOScaleX(1f, 1f).OnComplete(() =>
+        {     
             mathAnswersPanel.SetActive(true);
             mathEquationPanel.SetActive(true);
-            mathEQPanelRectT.DOSizeDelta(new(mathEQPanelRectT.sizeDelta.x, 120f), 2f).OnComplete(() =>
+            mathEQPanelRectT.DOSizeDelta(new(mathEQPanelRectT.sizeDelta.x, 120f), 1f).OnComplete(() =>
             {
                 equationText.text = equation.Equation;
             });
@@ -163,10 +179,10 @@ public class UIManager : MonoBehaviour
     {
         MathManager.Instance.CheckAnswer(currentEquation, selectedAnswer, currentTower);
         equationText.text = "";
-        mathEQPanelRectT.DOSizeDelta(new(mathEQPanelRectT.sizeDelta.x, 0f), 2f).OnComplete(() =>
+        mathEQPanelRectT.DOSizeDelta(new(mathEQPanelRectT.sizeDelta.x, 0f), 1f).OnComplete(() =>
         {
             mathAnswersPanel.SetActive(false);
-            mathUtilityPanel.transform.DOScaleX(0f, 2f).OnComplete(() =>
+            mathUtilityPanel.transform.DOScaleX(0f, 1f).OnComplete(() =>
             {
                 HideMathUI();
             });
@@ -182,6 +198,7 @@ public class UIManager : MonoBehaviour
         {
             button.gameObject.SetActive(false);
             button.onClick.RemoveAllListeners();
+            ShowTowerUtilityInfo();
         }
     }
 
@@ -190,9 +207,9 @@ public class UIManager : MonoBehaviour
     #region ---- InfoPanel ----
     private string GetMoveSpeed(float moveSpeed)
     {
-        if (moveSpeed <= 5) return "SLOW";
+        if (moveSpeed <= 5) return "LENT";
         if (moveSpeed < 10 && moveSpeed > 5) return "MED";
-        if (moveSpeed > 10) return "FAST";
+        if (moveSpeed > 10) return "RAPID";
 
         return "UNDEFINED";
     }
@@ -210,9 +227,9 @@ public class UIManager : MonoBehaviour
 
             switch (enemyData.PhysicalResistance)
             {
-                case EnemySO.EnemyPhysicalResistance.Low: return "LOW";
+                case EnemySO.EnemyPhysicalResistance.Low: return "SLAB";
                 case EnemySO.EnemyPhysicalResistance.Medium: return "MED";
-                case EnemySO.EnemyPhysicalResistance.High: return "HIGH";
+                case EnemySO.EnemyPhysicalResistance.High: return "MARE";
             }
         }
 
@@ -223,9 +240,9 @@ public class UIManager : MonoBehaviour
 
             switch (enemyData.MagicResistance)
             {
-                case EnemySO.EnemyMagicResistance.Low: return "LOW";
+                case EnemySO.EnemyMagicResistance.Low: return "SLAB";
                 case EnemySO.EnemyMagicResistance.Medium: return "MED";
-                case EnemySO.EnemyMagicResistance.High: return "HIGH";
+                case EnemySO.EnemyMagicResistance.High: return "MARE";
             }
         }
 
@@ -238,7 +255,7 @@ public class UIManager : MonoBehaviour
             physicalDamage.SetActive(true);
             magicalDamage.SetActive(false);
 
-            return "PHYSICAL";
+            return "FIZIC";
         }
 
         if (towerData.TowerDamageType == TowerSO.DamageType.Magic)
@@ -246,22 +263,26 @@ public class UIManager : MonoBehaviour
             physicalDamage.SetActive(false);
             magicalDamage.SetActive(true);
 
-            return "MAGICAL";
+            return "MAGIC";
         }
 
         return "UNKNOWN";
     }
     private string GetAttackSpeed(float attackSpeed)
     {
-        if (attackSpeed < 1) return "SLOW";
-        if (attackSpeed >= 1 && attackSpeed < 1.5) return "AVG";
-        if (attackSpeed >= 1.5) return "FAST";
+        if (attackSpeed < 1) return "LENT";
+        if (attackSpeed >= 1 && attackSpeed < 1.5) return "MED";
+        if (attackSpeed >= 1.5) return "RAPID";
 
         return "UNDEFINED";
     }   
 
     public void ShowEnemyInfo(EnemySO enemyData, float currentEnemyHealthPoints)
     {
+        if (isInfoPanelTransitioning) return;
+
+        isInfoPanelTransitioning = true;
+
         if (isTowerInfoOpen)
         {
             HideTowerInfo();
@@ -280,6 +301,7 @@ public class UIManager : MonoBehaviour
         upArrow.SetActive(false);
 
         infoPanel.transform.DOScaleY(1f, 1f);
+        StartCoroutine(ResetInfoPanelTransitioning());
 
         currentEnemyHP.text = currentEnemyHealthPoints.ToString();
         currentEnemyDamage.text = enemyData.EnemyDamage.ToString();
@@ -289,11 +311,14 @@ public class UIManager : MonoBehaviour
 
     public void ShowTowerInfo(TowerSO towerData, float currentTowerAmmo)
     {
+        if (isInfoPanelTransitioning) return;
+
+        isInfoPanelTransitioning = true;
+
         if (isEnemyInfoOpen)
         {
             HideEnemyInfo();
         }
-
 
         isTowerInfoOpen = true;
         isEnemyInfoOpen = false;
@@ -308,6 +333,7 @@ public class UIManager : MonoBehaviour
         upArrow.SetActive(false);
 
         infoPanel.transform.DOScaleY(1f, 1f);
+        StartCoroutine(ResetInfoPanelTransitioning());
 
         currentTowerDamage.text = towerData.AttackDamage.ToString();
         currentTowerAmmoAmount.text = currentTowerAmmo.ToString();
@@ -315,7 +341,7 @@ public class UIManager : MonoBehaviour
         currentTowerAttackSpeed.text = GetAttackSpeed(towerData.AttackSpeed);
     }
 
-    public void ShowTowerUtilityInfo(TowerSO towerUpgradeSO)
+    public void ShowTowerUtilityInfo()
     {
         towerUtilityPanel.SetActive(true);
         currentTowerInfoPanel.SetActive(true);
@@ -323,8 +349,6 @@ public class UIManager : MonoBehaviour
         leftArrow.SetActive(false);
 
         towerUtilityPanel.transform.DOScaleX(1f, 1f);
-
-        upgradeCost.text = towerUpgradeSO.TowerPrice.ToString();
     }
 
     public void HideTowerUtilityInfo()
@@ -333,6 +357,7 @@ public class UIManager : MonoBehaviour
         towerUtilityPanel.transform.DOScaleX(0f, 1f).OnComplete(() =>
         {
             towerUtilityPanel.SetActive(false);
+            leftArrow.SetActive(true);
         });
     }
 
@@ -368,6 +393,17 @@ public class UIManager : MonoBehaviour
         towerSign.SetActive(false);
     }
 
-
     #endregion
+
+    public void ShowDeadScreen()
+    {
+        deadScreen.SetActive(true);
+        deadScreen.transform.DOScale(1f, 2f);
+    }
+
+    private IEnumerator ResetInfoPanelTransitioning()
+    {
+        yield return new WaitForSeconds(1);
+        isInfoPanelTransitioning = false;
+    }
 }

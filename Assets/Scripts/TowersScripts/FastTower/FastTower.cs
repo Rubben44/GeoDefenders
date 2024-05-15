@@ -9,6 +9,8 @@ public class FastTower : Tower, IInteractable
 
     [SerializeField] private Transform[] ammoSpawnLocations;
 
+    public float CurrentAmmoAmount => currentAmmoAmount;
+
     private List<Enemy> enemiesInRange = new();
     private Transform target;
     private float fireCountdown = 0f;
@@ -116,7 +118,7 @@ public class FastTower : Tower, IInteractable
 
     public override void ReloadAmmo()
     {
-        throw new System.NotImplementedException();
+        currentAmmoAmount = currentTowerSO.TowerAmmo;
     }
 
     public TowerSO GetTowerInfo()

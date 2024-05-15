@@ -1,4 +1,4 @@
-using System.Collections;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -9,6 +9,11 @@ public class TowerUtilityManager : MonoBehaviour
     [SerializeField] private MathEquationsDatabase equationsDatabase;
     [SerializeField] private Button reloadButton;
     [SerializeField] private Button upgradeButton;
+    [SerializeField] private Color normalColor, notAvailableColor;
+    [SerializeField] private TextMeshProUGUI upgradeCost;
+    [SerializeField] private GameObject maxLevelText;
+
+    private bool isUpgrading = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -16,14 +21,45 @@ public class TowerUtilityManager : MonoBehaviour
         Instance = this;
     }
 
-
-    public void SetTowerUtilityPanel(Tower towerToSet, TowerSO upgradeTowerSO)
+    private bool IsMaxLevel(TowerSO upgradeTowerSO)
     {
+        return upgradeTowerSO == null;
+    }
+
+    public void SetTowerUtilityPanel(Tower towerToSet, IInteractable currentTower, TowerSO currentTowerSO, TowerSO upgradeTowerSO)
+    {
+        if (currentTower.CurrentAmmoAmount < currentTowerSO.TowerAmmo)
+        {
+            reloadButton.image.color = normalColor;
+            reloadButton.interactable = true;
+        }
+        else
+        {
+            reloadButton.interactable = false;
+            reloadButton.image.color = notAvailableColor;
+        }
+
+        if (IsMaxLevel(upgradeTowerSO))
+        {
+            upgradeButton.gameObject.SetActive(false);
+            maxLevelText.SetActive(true);
+        }
+        else
+        {
+            upgradeButton.gameObject.SetActive(true);
+            maxLevelText.SetActive(false);
+
+            upgradeButton.onClick.RemoveAllListeners();
+            upgradeButton.onClick.AddListener(() => UpgradeTower(towerToSet, upgradeTowerSO));
+        }
+
+        if (upgradeTowerSO != null)
+        {
+            upgradeCost.text = upgradeTowerSO.TowerPrice.ToString();
+        }
+
         reloadButton.onClick.RemoveAllListeners();
         reloadButton.onClick.AddListener(() => RequestReload(towerToSet));
-
-        upgradeButton.onClick.RemoveAllListeners();
-        upgradeButton.onClick.AddListener(() => UpgradeTower(towerToSet, upgradeTowerSO));
     }
 
     private void RequestReload(Tower towerToRequestReload)
@@ -35,12 +71,10 @@ public class TowerUtilityManager : MonoBehaviour
     private void UpgradeTower(Tower tower, TowerSO upgradeTowerSO)
     {
         GameObject lastTower = tower.gameObject;
-        Debug.Log("Clicked on upgrade!");
 
         if (upgradeTowerSO.TowerPrice <= EconomyManager.Instance.CurrentCoins)
         {
             BuildingManager.Instance.UpgradeTower(upgradeTowerSO, tower.transform, tower.CurrentTowerLocation, lastTower);
-            Debug.Log("Building the tower" + upgradeTowerSO);
         }
     }
 

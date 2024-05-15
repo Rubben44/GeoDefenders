@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 8567825962810024432, guid: cdf468e786346d14d9b3135792158a09,
     type: 3}
-  attackDamage: 5
-  attackSpeed: 1.5
-  towerAmmo: 50
+  attackDamage: 6
+  attackSpeed: 1.7
+  towerAmmo: 30
   towerRange: 8
-  towerPrice: 50
+  towerPrice: 100
   damageType: 0
   towerType: 1
-  GetTowerType: 0
   cannonSmokeVFX: {fileID: 0}
-  projectilePrefab: {fileID: 6908403426258122529, guid: 98bf69080e064984ca31aa0866d6e2d7,
+  projectilePrefab: {fileID: 290877662751461438, guid: 9e68263f7c8058d4388258c2a1fe7f58,
     type: 3}

@@ -78,6 +78,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void EndPath()
     {
+        EconomyManager.Instance.LoseHealth(currentEnemyData.EnemyDamage);
         Destroy(gameObject);
     }
 

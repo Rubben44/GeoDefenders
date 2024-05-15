@@ -40,6 +40,7 @@ public class BuyBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (BuildingManager.Instance != null)
         {
+            UIManager.Instance.HideBuildingInfoPanel(currentBuuldingPanel);
             BuildingManager.Instance.BuildTower(towerToBuildWithThisButton, PlaceToBuildTower, CurrentTowerLocation, OldBuild);
         }
         else

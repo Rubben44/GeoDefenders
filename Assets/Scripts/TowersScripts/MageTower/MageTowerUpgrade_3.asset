@@ -17,7 +17,7 @@ MonoBehaviour:
   attackDamage: 125
   attackSpeed: 0.5
   towerAmmo: 13
-  towerRange: 8
+  towerRange: 12
   towerPrice: 500
   damageType: 1
   towerType: 2

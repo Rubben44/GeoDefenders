@@ -17,6 +17,8 @@ public class MageTower : Tower, IInteractable
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float laserDuration = 0.5f;
 
+    public float CurrentAmmoAmount => currentAmmoAmount;
+
     private List<Enemy> enemiesInRange = new();
     private Transform target;
     private float chargeCountdown = 0f;
@@ -86,7 +88,6 @@ public class MageTower : Tower, IInteractable
 
         if (currentAmmoAmount == 0) return;
 
-        Debug.Log("Rotating: " + trianglePivot.rotation);
 
 
         float lerpValue = (chargeTime - chargeCountdown) / chargeTime;
@@ -96,7 +97,6 @@ public class MageTower : Tower, IInteractable
         if (renderer != null)
         {
             renderer.material.color = currentColor;
-            Debug.Log("Changing Color: " + currentColor);
         }
         else
         {

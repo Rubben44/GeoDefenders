@@ -5,6 +5,7 @@ public interface IDamageable
 
 public interface IInteractable
 {
+    public float CurrentAmmoAmount { get; }
     public TowerSO GetTowerInfo();
     public TowerSO GetUpgradeInfo();
     public float GetCurrentAmmo();

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
 {
-    [SerializeField]
     public TowerLocation CurrentTowerLocation { get; set; }
     public abstract void ReloadAmmo();
 

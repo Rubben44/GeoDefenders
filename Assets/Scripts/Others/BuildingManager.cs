@@ -39,101 +39,108 @@ public class BuildingManager : MonoBehaviour
             }
 
         }
-    
+
     }
 
-    public void UpgradeTower(TowerSO towerToBuild, Transform buildLocation, Tower.TowerLocation towerLocation, GameObject oldBuild)
+    public Tower UpgradeTower(TowerSO towerToBuild, Transform buildLocation, Tower.TowerLocation towerLocation, GameObject oldBuild)
     {
+        GameObject newTower = null;
         switch (towerLocation)
         {
             case Tower.TowerLocation.Up:
-                BuildUp(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Up);
+                newTower = BuildUp(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Up);
                 break;
 
             case Tower.TowerLocation.Down:
-                BuildDown(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Down);
+                newTower = BuildDown(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Down);
                 break;
 
             case Tower.TowerLocation.Left:
-                BuildOnLeftPart(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Left);
+                newTower = BuildOnLeftPart(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Left);
                 break;
 
             case Tower.TowerLocation.Right:
-                BuildOnRightPart(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Right);
+                newTower = BuildOnRightPart(towerToBuild, buildLocation, oldBuild, Tower.TowerLocation.Right);
                 break;
 
-            default: Debug.Log("What position are you looking at??");
+            default:
+                Debug.Log("What position are you looking at??");
                 break;
         }
+
+        return newTower?.GetComponent<Tower>();
     }
 
-    private void BuildDown(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
+    private GameObject BuildDown(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
     {
+        GameObject spawnedTower;
         if (towerToBuild.GetTowerType == TowerSO.TowerType.Temple)
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 270f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 270f, 0f)));
         }
         else
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 180f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 180f, 0f)));
         }
+        spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
 
         Destroy(oldPlace);
         EconomyManager.Instance.RemoveCoins(towerToBuild.TowerPrice);
+        return spawnedTower;
     }
 
-    private void BuildUp(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
+    private GameObject BuildUp(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
     {
-
+        GameObject spawnedTower;
         if (towerToBuild.GetTowerType == TowerSO.TowerType.Temple)
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 90f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 90f, 0f)));
         }
         else
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.identity);
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.identity);
         }
+        spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
 
         Destroy(oldPlace);
         EconomyManager.Instance.RemoveCoins(towerToBuild.TowerPrice);
+        return spawnedTower;
     }
 
-    private void BuildOnLeftPart(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
+    private GameObject BuildOnLeftPart(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
     {
+        GameObject spawnedTower;
         if (towerToBuild.GetTowerType == TowerSO.TowerType.Temple)
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 180f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 180f, 0f)));
         }
         else
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 90f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 90f, 0f)));
         }
+        spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
 
         Destroy(oldPlace);
         EconomyManager.Instance.RemoveCoins(towerToBuild.TowerPrice);
+        return spawnedTower;
     }
 
-    private void BuildOnRightPart(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
+    private GameObject BuildOnRightPart(TowerSO towerToBuild, Transform buildLocation, GameObject oldPlace, Tower.TowerLocation towerLocation)
     {
+        GameObject spawnedTower;
         if (towerToBuild.GetTowerType == TowerSO.TowerType.Temple)
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.identity);
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.identity);
         }
         else
         {
-            GameObject spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 270f, 0f)));
-            spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
+            spawnedTower = Instantiate(towerToBuild.TowerPrefab, buildLocation.position, Quaternion.Euler(new Vector3(0f, 270f, 0f)));
         }
+        spawnedTower.GetComponent<Tower>().CurrentTowerLocation = towerLocation;
 
         Destroy(oldPlace);
         EconomyManager.Instance.RemoveCoins(towerToBuild.TowerPrice);
+        return spawnedTower;
     }
-        
+
 }

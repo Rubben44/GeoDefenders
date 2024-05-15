@@ -303,7 +303,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1410902203
 MonoBehaviour:
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTowerSO: {fileID: 11400000, guid: 8c2b5291b6c36c142b912f607ccd6efb, type: 2}
+  upgradedTowerSO: {fileID: 0}
   trianglePivot: {fileID: 6615563299316967407}
   laserStartPoint: {fileID: 278308265}
   pyramid: {fileID: 8297940282243873265}

@@ -14,6 +14,8 @@ public class CannonTower : Tower, IInteractable
     [SerializeField] private Animator cannonAnimator;
     [SerializeField] private float turnSpeed = 10f;
 
+    public float CurrentAmmoAmount => currentAmmoAmount;
+
     private List<Enemy> enemiesInRange = new();
     private Transform target;
     private float fireCountdown = 0f;

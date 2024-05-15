@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
@@ -10,23 +10,35 @@ public class InteractionManager : MonoBehaviour
 
     private Camera mainCamera;
     private IInteractable currentTower;
+
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
- 
+
     void Start()
     {
         mainCamera = Camera.main;
     }
 
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-         
+
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
             {
                 Enemy enemy = hit.collider.GetComponent<Enemy>();
@@ -34,7 +46,7 @@ public class InteractionManager : MonoBehaviour
 
                 if (enemy)
                 {
-                    if (CurrentSelectedEnemy != enemy) 
+                    if (CurrentSelectedEnemy != enemy)
                     {
                         CurrentSelectedEnemy = enemy;
                         UIManager.Instance.ShowEnemyInfo(enemy.GetEnemyInfo(), enemy.GetCurrentHP());
@@ -51,8 +63,8 @@ public class InteractionManager : MonoBehaviour
                 {
                     currentTower = tower;
                     UIManager.Instance.ShowTowerInfo(tower.GetTowerInfo(), tower.GetCurrentAmmo());
-                    UIManager.Instance.ShowTowerUtilityInfo(tower.GetUpgradeInfo());
-                    TowerUtilityManager.Instance.SetTowerUtilityPanel(tower.GetCurrentTower(), tower.GetUpgradeInfo());
+                    UIManager.Instance.ShowTowerUtilityInfo();
+                    TowerUtilityManager.Instance.SetTowerUtilityPanel(tower.GetCurrentTower(), tower, tower.GetTowerInfo(), tower.GetUpgradeInfo());
                 }
                 else
                 {
@@ -66,7 +78,7 @@ public class InteractionManager : MonoBehaviour
                 UIManager.Instance.HideEnemyInfo();
                 UIManager.Instance.HideTowerInfo();
                 UIManager.Instance.HideTowerUtilityInfo();
-            }       
+            }
         }
 
         if (CurrentSelectedEnemy)
@@ -76,7 +88,9 @@ public class InteractionManager : MonoBehaviour
 
         if (currentTower != null)
         {
+            TowerUtilityManager.Instance.SetTowerUtilityPanel(currentTower.GetCurrentTower(), currentTower, currentTower.GetTowerInfo(), currentTower.GetUpgradeInfo());
             UIManager.Instance.ShowTowerInfo(currentTower.GetTowerInfo(), currentTower.GetCurrentAmmo());
+           // UIManager.Instance.ShowTowerUtilityInfo();
         }
     }
 
