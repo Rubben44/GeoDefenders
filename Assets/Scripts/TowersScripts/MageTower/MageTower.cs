@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Clasa speciala pentru "Magician". Aici sunt toate caracteristicile turunului "Magician", cum ar fi atacul, reload-ul si toate componentele necesare
 public class MageTower : Tower, IInteractable
 {
     [SerializeField] private TowerSO currentTowerSO;
@@ -131,6 +132,7 @@ public class MageTower : Tower, IInteractable
         StartCoroutine(DisableLaserAfterDelay(laserDuration));
         target.GetComponent<IDamageable>()?.TakeDamage(currentTowerSO.AttackDamage, currentTowerSO.TowerDamageType);
 
+        SFXManager.Instance.PlaySoundEffect("Mage");
         currentAmmoAmount--;
         currentAmmoAmount = Mathf.Clamp(currentAmmoAmount, 0, currentTowerSO.TowerAmmo);
     }

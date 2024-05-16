@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+// In acest container se gasesc toate caracteristicile de baza a unui turn
+
 [CreateAssetMenu(fileName = "TowerSO", menuName = "Tower")]
 public class TowerSO : ScriptableObject
 {

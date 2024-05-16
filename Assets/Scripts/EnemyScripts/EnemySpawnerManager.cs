@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Acest manager spawneaza efectiv inamicii dupa instructiunile primite de EnemyWaveManager
 public class EnemySpawnerManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnLocations;

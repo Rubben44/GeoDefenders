@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
+// Manager care se ocupa de functionalitatiile meniului principal
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private RectTransform background;

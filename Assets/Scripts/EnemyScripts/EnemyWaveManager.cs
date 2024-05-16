@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Clasa prin care sunt definite wave-urile 
 [System.Serializable]
 public class Wave
 {
@@ -10,6 +11,7 @@ public class Wave
     public float spawnInterval; // Time between each spawn
 }
 
+// Manager care se ocupa cu spawnarea de wave-uri 
 public class EnemyWaveManager : MonoBehaviour
 {
     [SerializeField] private EnemySpawnerManager enemySpawner;
@@ -46,7 +48,7 @@ public class EnemyWaveManager : MonoBehaviour
             }
             currentWaveIndex++;
         }
-        Debug.Log("All waves completed.");
+        UIManager.Instance.ShowWinScreen();
     }
 
     void StartWave()

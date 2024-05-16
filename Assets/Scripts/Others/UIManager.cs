@@ -5,6 +5,8 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
+
+// Acest Manager este responsabil de absolut tot de inseamna UI ( cu foarte mici exceptii specifice ) 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
@@ -47,6 +49,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform mathEQPanelRectT;
 
     [SerializeField] private GameObject deadScreen;
+    [SerializeField] private GameObject winScreen;
 
     private MathEquation currentEquation;
     private Tower currentTower;
@@ -88,6 +91,7 @@ public class UIManager : MonoBehaviour
         mathEQPanelRectT.sizeDelta = new(mathEQPanelRectT.sizeDelta.x, 0f);
     }
 
+    // Regiunea Building se ocupa de UI pentru construire turnurilor 
     #region ---- Building ---- 
     public void OpenUtilityPanel(GameObject olderLocation, Transform towerPlace, Tower.TowerLocation towerLocation)
     {
@@ -139,6 +143,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
+    // Regiunea ReloadUI se ocupa de UI pentru partea de a da reload folosind matematica 
     #region ---- ReloadUI ----
     public void OpenMathEquationPanel(MathEquation equation, Tower tower)
     {
@@ -203,7 +208,7 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
-
+    // Regiunea InfoPanel se ocupa de UI pentru partea informatica a jocului precum turnurile si ianmicii 
     #region ---- InfoPanel ----
     private string GetMoveSpeed(float moveSpeed)
     {
@@ -400,6 +405,12 @@ public class UIManager : MonoBehaviour
         deadScreen.SetActive(true);
         deadScreen.transform.DOScale(1f, 2f);
     }
+    public void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+        winScreen.transform.DOScale(1f, 2f);
+    }
+
 
     private IEnumerator ResetInfoPanelTransitioning()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manager care se ocupa cu construirea si upgradarea turnurilor
 public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager Instance { get; private set; }

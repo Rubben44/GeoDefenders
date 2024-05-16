@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Manager care se ocupa cu verificarea raspunsului la o intrebare pentru a da reload
 public class MathManager : MonoBehaviour
 {
     public static MathManager Instance { get; private set; }

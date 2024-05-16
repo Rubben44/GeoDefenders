@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+// Acest manager se ocupa de gestionarea resurselor consumabile intr-un joc ( banii si vietiile ) 
 public class EconomyManager : MonoBehaviour
 {
     public static EconomyManager Instance { get; private set; }
@@ -19,7 +20,7 @@ public class EconomyManager : MonoBehaviour
 
     private void Start()
     {
-        currentCoins = 1000;
+        currentCoins = 200;
         currentLives = 3;
         UpdateUI();
     }

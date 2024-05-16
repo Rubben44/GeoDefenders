@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// In acest container se gasesc toate caracteristicile de baza a unui inamic
+
 [CreateAssetMenu(fileName = "EnemyType", menuName = "Enemy / CreateEnemySO")]
 public class EnemySO : ScriptableObject
 {

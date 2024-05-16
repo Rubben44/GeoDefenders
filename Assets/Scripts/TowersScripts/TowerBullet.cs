@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Clasa de baza folosita pentru "gloantele" turnurilor
 public class TowerBullet : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;

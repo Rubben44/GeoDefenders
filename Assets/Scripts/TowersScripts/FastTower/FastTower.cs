@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Clasa speciala pentru "Templu". Aici sunt toate caracteristicile turunului "Templu", cum ar fi atacul, reload-ul si toate componentele necesare
 public class FastTower : Tower, IInteractable
 {
     [SerializeField] private TowerSO currentTowerSO;
@@ -91,6 +92,7 @@ public class FastTower : Tower, IInteractable
             shiriken.SeekEnemy(target, currentTowerSO.AttackDamage, currentTowerSO.TowerDamageType);
         }
 
+        SFXManager.Instance.PlaySoundEffect("Temple");
         currentAmmoAmount--;
         currentAmmoAmount = Mathf.Clamp(currentAmmoAmount, 0, currentTowerSO.TowerAmmo);
     }

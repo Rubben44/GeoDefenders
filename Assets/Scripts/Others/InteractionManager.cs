@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
+// Se ocupa cu interactiunea dintre jucator si mediu inconjurator prin mouse ( probabil cel mai prost optimizat cod din acest proiect =)) ) 
 public class InteractionManager : MonoBehaviour
 {
     public static InteractionManager Instance { get; private set; }
@@ -50,6 +51,7 @@ public class InteractionManager : MonoBehaviour
                     {
                         CurrentSelectedEnemy = enemy;
                         UIManager.Instance.ShowEnemyInfo(enemy.GetEnemyInfo(), enemy.GetCurrentHP());
+                        SFXManager.Instance.PlaySoundEffect("Click");
                         enemy.EnemyDestryed += OnEnemyDestroyed;
                     }
                 }
@@ -64,6 +66,7 @@ public class InteractionManager : MonoBehaviour
                     currentTower = tower;
                     UIManager.Instance.ShowTowerInfo(tower.GetTowerInfo(), tower.GetCurrentAmmo());
                     UIManager.Instance.ShowTowerUtilityInfo();
+                    SFXManager.Instance.PlaySoundEffect("Click");
                     TowerUtilityManager.Instance.SetTowerUtilityPanel(tower.GetCurrentTower(), tower, tower.GetTowerInfo(), tower.GetUpgradeInfo());
                 }
                 else

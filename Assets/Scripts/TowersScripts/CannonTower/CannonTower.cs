@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+// Clasa speciala pentru "Tun". Aici sunt toate caracteristicile turunului "Tun", cum ar fi atacul, reload-ul si toate componentele necesare
 public class CannonTower : Tower, IInteractable
 {
     [SerializeField] private TowerSO currentTowerSO;
@@ -111,6 +112,7 @@ public class CannonTower : Tower, IInteractable
             cannonBall.SeekEnemy(target, currentTowerSO.AttackDamage, currentTowerSO.TowerDamageType);
         }
 
+        SFXManager.Instance.PlaySoundEffect("Cannon");
         currentAmmoAmount--;
         currentAmmoAmount = Mathf.Clamp(currentAmmoAmount, 0, currentTowerSO.TowerAmmo);
     }

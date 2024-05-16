@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine;
 
+// Clasa de baza a unui inamic care difera in functie de EnemySO, container-ul care contine informatia efectiva
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private Image enemyHealthBar;

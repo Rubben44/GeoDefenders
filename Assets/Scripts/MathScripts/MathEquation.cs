@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Clasa container care contine toate informatiile despre o ecuatie 
 [Serializable]
 public class MathEquation 
 {
