@@ -127,17 +127,17 @@ public class Enemy : MonoBehaviour, IDamageable
         switch (currentEnemyData.GetEnemyType)
         {
             case EnemySO.EnemyType.Simple:
-                int coinsToAddSimple = Random.Range(3, 7);
+                int coinsToAddSimple = Random.Range(10, 20);
                 EconomyManager.Instance.AddCoins(coinsToAddSimple);
                 break;
 
             case EnemySO.EnemyType.Mage:
-                int coinsToAddMage = Random.Range(10, 20);
+                int coinsToAddMage = Random.Range(20, 30);
                 EconomyManager.Instance.AddCoins(coinsToAddMage);
                 break;
 
             case EnemySO.EnemyType.Tank:
-                int coinsToAddTank = Random.Range(25, 30);
+                int coinsToAddTank = Random.Range(35, 50);
                 EconomyManager.Instance.AddCoins(coinsToAddTank);
                 break;
 

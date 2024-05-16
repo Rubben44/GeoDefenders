@@ -65,6 +65,7 @@ public class TowerUtilityManager : MonoBehaviour
 
     private void RequestReload(Tower towerToRequestReload)
     {
+        SFXManager.Instance.PlaySoundEffect("Click");
         MathEquation equation = GetRandomMathEquation();
         UIManager.Instance.OpenMathEquationPanel(equation, towerToRequestReload);
     }
@@ -75,6 +76,7 @@ public class TowerUtilityManager : MonoBehaviour
 
         if (upgradeTowerSO.TowerPrice <= EconomyManager.Instance.CurrentCoins)
         {
+            SFXManager.Instance.PlaySoundEffect("Click");
             BuildingManager.Instance.UpgradeTower(upgradeTowerSO, tower.transform, tower.CurrentTowerLocation, lastTower);
         }
     }

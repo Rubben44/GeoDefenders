@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 285564858685088870, guid: 4f6e8f864034bc949ba165c8ffa32bcb,
     type: 3}
   enemyHP: 50
-  enemyMoveSpeed: 5
+  enemyMoveSpeed: 4
   enemyDamage: 1
   physicalResistance: 0
   magicResistance: 3

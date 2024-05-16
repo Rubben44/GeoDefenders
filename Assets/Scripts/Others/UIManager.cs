@@ -212,9 +212,9 @@ public class UIManager : MonoBehaviour
     #region ---- InfoPanel ----
     private string GetMoveSpeed(float moveSpeed)
     {
-        if (moveSpeed <= 5) return "LENT";
-        if (moveSpeed < 10 && moveSpeed > 5) return "MED";
-        if (moveSpeed > 10) return "RAPID";
+        if (moveSpeed <= 2) return "LENT";
+        if (moveSpeed < 5 && moveSpeed > 2) return "MED";
+        if (moveSpeed >= 5) return "RAPID";
 
         return "UNDEFINED";
     }

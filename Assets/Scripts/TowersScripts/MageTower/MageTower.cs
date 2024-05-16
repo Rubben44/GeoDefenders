@@ -74,6 +74,7 @@ public class MageTower : Tower, IInteractable
         }
     }
 
+    // Aceasta functie se ocupa cu vizarea inamicilor si este specifica fiecarui turn
     void UpdateTarget()
     {
         float shortestDistance = Mathf.Infinity;
@@ -122,6 +123,7 @@ public class MageTower : Tower, IInteractable
         }
     }
 
+  
     private void Shoot()
     {
         if (target == null) return;

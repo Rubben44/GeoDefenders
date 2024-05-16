@@ -53,6 +53,7 @@ public class FastTower : Tower, IInteractable
         }
     }
 
+    // Aceasta functie se ocupa cu vizarea inamicilor si este specifica fiecarui turn
     void UpdateTarget()
     {
         float shortestDistance = Mathf.Infinity;
@@ -80,6 +81,7 @@ public class FastTower : Tower, IInteractable
     private void Shoot()
     {
         if (target == null) return;
+        if (currentAmmoAmount == 0) return;
 
         int randomSpawnLocation = Random.Range(0, 1);
         Transform currentSpawnLocation = ammoSpawnLocations[randomSpawnLocation];
