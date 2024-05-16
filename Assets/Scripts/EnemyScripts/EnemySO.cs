@@ -9,6 +9,7 @@ public class EnemySO : ScriptableObject
     public int EnemyDamage => enemyDamage;
     public EnemyPhysicalResistance PhysicalResistance => physicalResistance;
     public EnemyMagicResistance MagicResistance => magicResistance;
+    public EnemyType GetEnemyType => enemyType;
 
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float enemyHP;
@@ -16,6 +17,7 @@ public class EnemySO : ScriptableObject
     [SerializeField] private int enemyDamage = 1;
     [SerializeField] private EnemyPhysicalResistance physicalResistance;
     [SerializeField] private EnemyMagicResistance magicResistance;
+    [SerializeField] private EnemyType enemyType;
 
     public enum EnemyPhysicalResistance
     {
@@ -30,6 +32,12 @@ public class EnemySO : ScriptableObject
         Low,
         Medium, 
         High
+    }
+    public enum EnemyType
+    {
+        Simple,
+        Mage,
+        Tank
     }
 
 

@@ -6,12 +6,18 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private RectTransform background;
     [SerializeField] private GameObject[] mainMenuButtons;
+    [SerializeField] private GameObject[] levelButtons;
     [SerializeField] private GameObject settingsMenu;
 
 
     private void Start()
     {
         foreach (GameObject button in mainMenuButtons)
+        {
+            button.transform.localScale = Vector3.zero;
+        }
+
+        foreach (GameObject button in levelButtons)
         {
             button.transform.localScale = Vector3.zero;
         }
@@ -28,10 +34,20 @@ public class MainMenu : MonoBehaviour
 
     public void OnSettingsButtonClicked()
     {
-        background.DOSizeDelta(new(600f, 600f), 2f).OnComplete(() =>
+        foreach (GameObject button in mainMenuButtons)
+        {
+            button.transform.localScale = Vector3.zero;
+        }
+
+        background.DOSizeDelta(new(500f, 500f), 2f).OnComplete(() =>
         {
             settingsMenu.SetActive(true);
         });
+    }
+
+    public void ShowLevels()
+    {
+        StartCoroutine(ShowLevelButtons());
     }
 
     public void ExitTheGame()
@@ -42,6 +58,16 @@ public class MainMenu : MonoBehaviour
     private IEnumerator ShowMainMenuButtons()
     {
         foreach (GameObject button in mainMenuButtons)
+        {
+            button.transform.DOScale(1f, 1f);
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private IEnumerator ShowLevelButtons()
+    {
+        foreach (GameObject button in levelButtons)
         {
             button.transform.DOScale(1f, 1f);
 

@@ -60,6 +60,7 @@ public class TowerUtilityManager : MonoBehaviour
 
         reloadButton.onClick.RemoveAllListeners();
         reloadButton.onClick.AddListener(() => RequestReload(towerToSet));
+
     }
 
     private void RequestReload(Tower towerToRequestReload)

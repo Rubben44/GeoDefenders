@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject enemyHealthHolder;
     [SerializeField] private GameObject deadParticles;
 
+
     public delegate void OnEnemyDestroyed(Enemy enemyDestryed);
     public delegate void OnHealthChanged(Enemy enemy, float newHealth);
 
@@ -115,12 +116,34 @@ public class Enemy : MonoBehaviour, IDamageable
         GameObject currentDeadParticles = Instantiate(deadParticles, transform.position, Quaternion.identity);
         currentDeadParticles.GetComponent<ParticleSystem>().Play();
 
-        int coinsToAdd = Random.Range(3, 7);
+        GiveMoney();
         EnemyDestryed?.Invoke(this);
-        EconomyManager.Instance.AddCoins(coinsToAdd);
         Destroy(gameObject);
     }
 
+    private void GiveMoney()
+    {
+        switch (currentEnemyData.GetEnemyType)
+        {
+            case EnemySO.EnemyType.Simple:
+                int coinsToAddSimple = Random.Range(3, 7);
+                EconomyManager.Instance.AddCoins(coinsToAddSimple);
+                break;
+
+            case EnemySO.EnemyType.Mage:
+                int coinsToAddMage = Random.Range(10, 20);
+                EconomyManager.Instance.AddCoins(coinsToAddMage);
+                break;
+
+            case EnemySO.EnemyType.Tank:
+                int coinsToAddTank = Random.Range(25, 30);
+                EconomyManager.Instance.AddCoins(coinsToAddTank);
+                break;
+
+            default: Debug.Log("What enemy are you?");
+                break;
+        }
+    }
     private float GetPhysicalDamageMultiplier(EnemySO.EnemyPhysicalResistance resistance)
     {
         switch (resistance)

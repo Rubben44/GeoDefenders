@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FastTower : Tower, IInteractable
 {
@@ -9,12 +10,15 @@ public class FastTower : Tower, IInteractable
 
     [SerializeField] private Transform[] ammoSpawnLocations;
 
+    [SerializeField] private GameObject ammo;
+    public GameObject ammoGameObject => ammo;
     public float CurrentAmmoAmount => currentAmmoAmount;
 
     private List<Enemy> enemiesInRange = new();
     private Transform target;
     private float fireCountdown = 0f;
     private float currentAmmoAmount;
+
 
     private void Start()
     {
@@ -34,6 +38,17 @@ public class FastTower : Tower, IInteractable
             }
 
             fireCountdown -= Time.deltaTime;
+        }
+
+        if (CurrentAmmoAmount < 10)
+        {
+            ammoGameObject.SetActive(true);
+            ammoGameObject.GetComponent<Image>().color = Color.red;
+            ammoGameObject.transform.LookAt(Camera.main.transform);
+        }
+        else
+        {
+            ammoGameObject.SetActive(false);
         }
     }
 
@@ -77,6 +92,7 @@ public class FastTower : Tower, IInteractable
         }
 
         currentAmmoAmount--;
+        currentAmmoAmount = Mathf.Clamp(currentAmmoAmount, 0, currentTowerSO.TowerAmmo);
     }
 
     private void EliminateDestryedEnemy(Enemy enemyToEliminate)

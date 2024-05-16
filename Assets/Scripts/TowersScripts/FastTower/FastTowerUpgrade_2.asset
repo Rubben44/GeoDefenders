@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 4205181066085892131, guid: a0d60acd85247bb45bc4cbe126f5dc79,
     type: 3}
-  attackDamage: 6
+  attackDamage: 7
   attackSpeed: 2
   towerAmmo: 40
   towerRange: 8

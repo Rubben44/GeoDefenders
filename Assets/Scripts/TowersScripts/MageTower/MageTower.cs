@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MageTower : Tower, IInteractable
 {
@@ -16,6 +17,8 @@ public class MageTower : Tower, IInteractable
     [SerializeField] private Color readyColor = Color.red; // Color when ready to fire
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float laserDuration = 0.5f;
+    [SerializeField] private GameObject ammo;
+    public GameObject ammoGameObject => ammo;
 
     public float CurrentAmmoAmount => currentAmmoAmount;
 
@@ -24,11 +27,14 @@ public class MageTower : Tower, IInteractable
     private float chargeCountdown = 0f;
     private float currentAmmoAmount;
 
+    private Camera mainCamera;
+
     private void Start()
     {
         currentAmmoAmount = currentTowerSO.TowerAmmo;
         chargeCountdown = chargeTime;
         laserLine.enabled = false;
+        mainCamera = Camera.main;
     }
     void Update()
     {
@@ -53,6 +59,17 @@ public class MageTower : Tower, IInteractable
         {
             laserLine.enabled = false;
             chargeCountdown = chargeTime;
+        }
+
+        if (CurrentAmmoAmount < 3)
+        {
+            ammoGameObject.SetActive(true);
+            ammoGameObject.GetComponent<Image>().color = Color.red;
+            ammoGameObject.transform.LookAt(mainCamera.transform);
+        }
+        else
+        {
+            ammoGameObject.SetActive(false);
         }
     }
 

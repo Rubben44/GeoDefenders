@@ -19,3 +19,4 @@ MonoBehaviour:
   enemyDamage: 1
   physicalResistance: 0
   magicResistance: 3
+  enemyType: 1

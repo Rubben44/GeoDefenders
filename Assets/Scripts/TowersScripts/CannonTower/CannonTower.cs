@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class CannonTower : Tower, IInteractable
@@ -13,6 +13,8 @@ public class CannonTower : Tower, IInteractable
     [SerializeField] private Transform cannonBallSpawningLocation;
     [SerializeField] private Animator cannonAnimator;
     [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private GameObject ammo;
+    public GameObject ammoGameObject => ammo;
 
     public float CurrentAmmoAmount => currentAmmoAmount;
 
@@ -20,10 +22,12 @@ public class CannonTower : Tower, IInteractable
     private Transform target;
     private float fireCountdown = 0f;
     private float currentAmmoAmount;
+    private Camera mainCamera;
 
     private void Start()
     {
         currentAmmoAmount = currentTowerSO.TowerAmmo;
+        mainCamera = Camera.main;
     }
 
     void Update()
@@ -41,6 +45,17 @@ public class CannonTower : Tower, IInteractable
 
             fireCountdown -= Time.deltaTime;
         }
+
+        if (CurrentAmmoAmount < 5)
+        {
+            ammoGameObject.SetActive(true);
+            ammoGameObject.GetComponent<Image>().color = Color.red;
+            ammoGameObject.transform.LookAt(mainCamera.transform);
+        }
+        else
+        {
+            ammoGameObject.SetActive(false);
+        }   
     }
 
     void UpdateTarget()

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52a137d40fa94a44ac3e68383ba1bdb, type: 3}
   m_Name: Tank
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7396079460939663401, guid: cfb4b0d3e5f2c3441b29c0397971a24b,
+  enemyPrefab: {fileID: 6089913183909256120, guid: 293f19d87f40f2844a2ee53cac61c196,
     type: 3}
   enemyHP: 200
   enemyMoveSpeed: 2
   enemyDamage: 1
   physicalResistance: 3
   magicResistance: 0
+  enemyType: 2

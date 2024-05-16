@@ -19,7 +19,7 @@ public class EconomyManager : MonoBehaviour
 
     private void Start()
     {
-        currentCoins = 2000;
+        currentCoins = 1000;
         currentLives = 3;
         UpdateUI();
     }
@@ -74,6 +74,10 @@ public class EconomyManager : MonoBehaviour
         
     private void Dead()
     {
+        hearts[0].SetActive(false);
+        hearts[1].SetActive(false);
+        hearts[2].SetActive(false);
+
         UIManager.Instance.ShowDeadScreen();
     }
 
